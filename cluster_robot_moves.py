@@ -3,17 +3,16 @@ import matplotlib.pyplot as plt
 from kmeans import k_means
 
 #import CSV File
-data = pd.read_csv('auto-mpg.csv', index_col='model year')
-# only get data from 1976
-data76 = data.loc[76]
+data = pd.read_csv('sensor_readings_2.csv', names=["First Reading","Second Reading", "Robot Move"])
+
 
 
 # The data property that will be clustered
-cylinder_numbers = [4, 6, 8]
+robot_moves = ["Slight-Right-Turn", "Sharp-Right-Turn", "Move-Forward", "Slight-Left-Turn"]
 
 # The two data properties that will be tested
-x_axis = 'weight'
-y_axis = 'mpg'
+x_axis = 'First Reading'
+y_axis = 'Second Reading'
 
 #create a larger window to display four plots
 plt.figure(figsize=(16,8))
@@ -21,11 +20,11 @@ plt.figure(figsize=(16,8))
 plt.subplot(2,2,1)
 
 #plot data mpg as x axis, weight as y axis, and label with cylinders
-for cylinder_number in cylinder_numbers:
+for robot_move in robot_moves:
     plt.scatter(
-        data[x_axis][data['cylinders'] == cylinder_number],
-        data[y_axis][data['cylinders'] == cylinder_number],
-        label=cylinder_number
+        data[x_axis][data['Robot Move'] == robot_move],
+        data[y_axis][data['Robot Move'] == robot_move],
+        label=robot_move
     )
 
 #create x,y labels and titel and legend for cylinders
@@ -54,7 +53,7 @@ n_data = data.shape[0]
 train_data = data[[x_axis, y_axis]].values.reshape((n_data, 2))
 
 # Enter k_means inputs.
-clusters = 3  # Number of clusters into which we want to split our training dataset.
+clusters = 4  # Number of clusters into which we want to split our training dataset.
 iterations = 50  # maximum number of training iterations.
 
 
@@ -66,11 +65,11 @@ k_means = k_means(train_data, clusters)
 
 # Plot actual clusters for reference
 plt.subplot(2,2,3)
-for cylinder_number in cylinder_numbers:
+for robot_move in robot_moves:
     plt.scatter(
-        data[x_axis][data['cylinders'] == cylinder_number],
-        data[y_axis][data['cylinders'] == cylinder_number],
-        label=cylinder_number
+        data[x_axis][data['Robot Move'] == robot_move],
+        data[y_axis][data['Robot Move'] == robot_move],
+        label=robot_move
     )
 
 plt.xlabel(x_axis)

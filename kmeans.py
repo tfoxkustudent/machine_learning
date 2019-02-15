@@ -59,7 +59,7 @@ class k_means:
         # Get number of centroids.
         n_centroids = centroids.shape[0]
 
-        # We need to return the following variables correctly.
+        # return empty array for nearest centroid.
         nearest_centroid = np.zeros((n_data, 1))
 
         # find the closest centroid for every data point
