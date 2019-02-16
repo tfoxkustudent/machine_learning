@@ -3,6 +3,7 @@ This file will determine centroids, centroid membership, and kmeans.
 """
 
 import numpy as np
+from equations import relSSECalc, CHtest, mdvar
 
 
 class k_means:
@@ -123,4 +124,34 @@ class k_means:
                 self.clusters
             )
 
-        return centroids, nearest_centroid 
+        return centroids, nearest_centroid
+
+    def kmeansOpt(self, SSELimit=0.0001, innerIterLim=100):
+        # loop preallocations
+        self.clusters = 1  # Clusterings start at 1 and increments at top of loop
+
+        # Preallocating CH and F-test limits
+        relativeSSE = 1  # Initialize Relative Sum of Squared Error test results
+        CHList = []  # List of CH index results
+        iterCount = 0
+
+        # While loop
+        while relativeSSE > SSELimit:
+            self.clusters += 1
+            iterCount += 1
+            # k_means = k_means(data, clusters)  # initialize kmeans and post indent clusters
+            (centroids, nearestCent) = k_means.train(self, innerIterLim)  # train K-means for kmeansIter iterations
+
+            CHList.append(CHtest(self.data, centroids, nearestCent))  # update CHlist
+            relativeSSE = relSSECalc(self.data, centroids, nearestCent)  # F test for loop conditions
+
+            # Printing loop information
+            print("Iteration: ", iterCount)
+            print("Clusters: ", self.clusters)
+            print("Relative unexplained variance results: ", relativeSSE)
+            print("CH-index test: ", CHList[-1], "\n")
+        # return opt K for K-means
+        self.clusters = (CHList.index(max(CHList)) + 2)
+        (centroids, nearestCent) = k_means.train(self, 100)
+
+        return centroids, nearestCent

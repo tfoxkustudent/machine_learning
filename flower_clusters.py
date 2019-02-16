@@ -4,17 +4,16 @@ from kmeans import k_means
 import numpy as np
 
 #import CSV File
-data = pd.read_csv('auto-mpg.csv', index_col='model year')
-# only get data from 1976
-data76 = data.loc[76]
+data = pd.read_csv('iris.csv')
+
 
 
 # The data property that will be clustered
-cylinder_numbers = [4, 6, 8]
+flowers = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
 
 # The two data properties that will be tested
-x_axis = 'weight'
-y_axis = 'mpg'
+x_axis = 'PetalWidthCm'
+y_axis = 'PetalLengthCm'
 
 #create a larger window to display four plots
 plt.figure(figsize=(16,8))
@@ -22,11 +21,11 @@ plt.figure(figsize=(16,8))
 plt.subplot(2,2,1)
 
 #plot data mpg as x axis, weight as y axis, and label with cylinders
-for cylinder_number in cylinder_numbers:
+for flower in flowers:
     plt.scatter(
-        data[x_axis][data['cylinders'] == cylinder_number],
-        data[y_axis][data['cylinders'] == cylinder_number],
-        label=cylinder_number
+        data[x_axis][data['Species'] == flower],
+        data[y_axis][data['Species'] == flower],
+        label=flower
     )
 
 #create x,y labels and titel and legend for cylinders
@@ -63,7 +62,7 @@ for j in range(train_data.shape[1]):
     train_data[:,j] /= train_data_scale[j]
 
 # Enter k_means inputs.
-clusters = 3  # Number of clusters into which we want to split our training dataset.
+clusters = 4  # Number of clusters into which we want to split our training dataset.
 iterations = 50  # maximum number of training iterations.
 
 
@@ -82,14 +81,13 @@ for j in range(train_data.shape[1]):
     train_data[:,j] += train_data_mean[j]
     centroids[:,j] += train_data_mean[j]
 
-
 # Plot actual clusters for reference
 plt.subplot(2,2,3)
-for cylinder_number in cylinder_numbers:
+for flower in flowers:
     plt.scatter(
-        data[x_axis][data['cylinders'] == cylinder_number],
-        data[y_axis][data['cylinders'] == cylinder_number],
-        label=cylinder_number
+        data[x_axis][data['Species'] == flower],
+        data[y_axis][data['Species'] == flower],
+        label=flower
     )
 
 plt.xlabel(x_axis)
