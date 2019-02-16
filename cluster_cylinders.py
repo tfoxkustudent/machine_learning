@@ -63,7 +63,7 @@ for j in range(train_data.shape[1]):
     train_data[:,j] /= train_data_scale[j]
 
 # Enter k_means inputs.
-clusters = 3  # Number of clusters into which we want to split our training dataset.
+clusters = 1  # Number of clusters into which we want to split our training dataset.
 iterations = 50  # maximum number of training iterations.
 
 
