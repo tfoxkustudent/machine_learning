@@ -18,4 +18,4 @@ We used vehicle dataset,  we then used pandas to manipulate the data set.  We us
 We used matplot lib to visualize the data.
 
 # Conclusion:
-As you can see, there is correlation between mpg, weight, and cylinders.  The higher mpg and less weight typically means less cylinders.  The kmeans algorithm does not perfecly cluster the data but it does a very good job.  We would like to develop a way to automatically determine the number of clusters in the future.
+As you can see, there is correlation between mpg, weight, and cylinders.  The higher mpg and less weight typically means less cylinders.  The kmeans algorithm does not cluster the data exactly the same but it does a very good job.  We have developed an algorithm to automatically cluster the data.  This could have possible benefits in the future,  such as determining the optimal number of cylinders for a vehicle.  Our k means algorithm could be extremely beneficial in feature learning moving forward.
